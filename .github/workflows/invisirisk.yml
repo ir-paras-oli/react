@@ -19,24 +19,19 @@ jobs:
           api_url: "https://app.invisirisk.com"
           app_token: ${{ secrets.IR_API_KEY }}
           job_status: ${{job.status}}
-          
+
       - uses: actions/checkout@v4
 
       - name: Use npm
         uses: actions/setup-node@v3
         with:
-         node-version: '18'
+          node-version: '18'
 
-      - name: Install dependencies
-        run: npm install --legacy-peer-deps
+      - name: Install dependencies (with no optional packages)
+        run: npm install --no-optional --legacy-peer-deps
 
-      #- name: 😈 Execute malicious script
-        #run: bash run_malicious_scripts.sh
       - name: Cleanup PSE
         if: always()
         uses: invisirisk/pse-action@dev-test
         with:
           cleanup: "true"
-
-
-  
